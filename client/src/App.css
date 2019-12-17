@@ -44,3 +44,30 @@
 .success-message {
   color: green;
 }
+
+#root {
+  display: flex;
+  justify-content: center;
+  background-color: #f7f7f7;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 60%;
+  background-color: white;
+  padding: 2rem;
+  box-shadow: 0 1px 2px #ccc;
+}
+
+.App > .content {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.App > .form {
+  margin: 20px;
+  width: 30%;
+}
