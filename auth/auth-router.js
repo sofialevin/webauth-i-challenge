@@ -9,17 +9,25 @@ const router = express.Router();
 router.post('/register', (req, res) => {
   const body = req.body;
 
-  const hash = bcrypt.hashSync(body.password, 14);
+  if (body.username && body.password) {
+    const hash = bcrypt.hashSync(body.password, 12);
 
-  body.password = hash;
+    body.password = hash;
 
-  Users.add(body)
-    .then(user => {
-      res.status(201).json(user);
+    Users.add(body)
+      .then(user => {
+        res.status(201).json(user);
+      })
+      .catch(err => {
+        if (err.toString().includes("UNIQUE") && err.toString().includes("users.username")) {
+          res.status(400).json({ error: err, message: "User already exists" });
+        } else {
+          res.status(500).json({ error: err, message: "Oops, something went wrong." });
+        }
     })
-    .catch(error => {
-      res.status(500).json(error);
-    })
+  } else {
+    res.status(400).json({ message: "Please enter a username and password" })
+  }
 })
 
 router.post('/login', (req, res) => {
@@ -34,7 +42,10 @@ router.post('/login', (req, res) => {
       }
     })
     .catch(err => {
-      res.status(500).json(err)
+      res.status(500).json({
+        error: err,
+        message: 'Something went wrong.'
+      })
     })
 })
 
