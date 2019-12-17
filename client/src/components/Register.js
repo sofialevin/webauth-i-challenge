@@ -29,8 +29,6 @@ const Register = () => {
     })
   }
 
-  console.log(user)
-
   return (
     <Form onSubmit={handleRegister}>
         <Form.Field>

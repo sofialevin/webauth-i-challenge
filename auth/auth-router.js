@@ -36,7 +36,7 @@ router.post('/login', (req, res) => {
   Users.findBy({ username })
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
-        res.status(200).json({ message: "Logged in!" })
+        res.status(200).json({ message: "Logged in!", user: { username: user.username, id: user.id } })
       } else {
         res.status(401).json({ message: "You shall not pass!" })
       }
