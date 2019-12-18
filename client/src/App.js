@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './App.css';
 import Register from './components/Register.js';
 import Login from './components/Login.js';
-import { Menu } from 'semantic-ui-react'
+import { Menu } from 'semantic-ui-react';
+import axios from "axios";
 
 function App() {
   const [ activeItem, setActiveItem ] = useState('home')
@@ -10,6 +11,16 @@ function App() {
   const handleItemClick = (event, {name}) => {
     console.log(name)
     setActiveItem(name)
+  }
+
+  const handleLogout = () => {
+    axios.get(`http://localhost:4000/api/logout`)
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   return (
@@ -30,6 +41,12 @@ function App() {
           active={activeItem === 'login'}
           onClick={handleItemClick}
         />
+        <Menu.Menu position='right'>
+            <Menu.Item
+              name='logout'
+              onClick={handleLogout}
+            />
+          </Menu.Menu>
       </Menu>
       <section class="content">
         {activeItem === 'home' && <h1>Hello!</h1>}
@@ -39,8 +56,5 @@ function App() {
     </div>
   );
 }
-
-
-
 
 export default App;

@@ -16,6 +16,7 @@ router.post('/register', (req, res) => {
 
     Users.add(body)
       .then(user => {
+        req.session.username = user.username
         res.status(201).json(user);
       })
       .catch(err => {
@@ -36,6 +37,7 @@ router.post('/login', (req, res) => {
   Users.findBy({ username })
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
+        req.session.username = user.username
         res.status(200).json({ message: "Logged in!", user: { username: user.username, id: user.id } })
       } else {
         res.status(401).json({ message: "You shall not pass!" })
@@ -48,5 +50,22 @@ router.post('/login', (req, res) => {
       })
     })
 })
+
+router.get("/logout", (req, res) => {
+  if (req.session) {
+    req.session.destroy(error => {
+      if (error) {
+        res.status(500).json({
+          message:
+            "Something went wrong.",
+        });
+      } else {
+        res.status(200).json({ message: "Bye!" });
+      }
+    });
+  } else {
+    res.status(200).end();
+  }
+});
 
 module.exports = router;
