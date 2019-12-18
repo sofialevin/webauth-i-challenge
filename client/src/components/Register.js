@@ -18,7 +18,7 @@ const Register = () => {
 };
 
   const handleRegister = () => {
-    axios.post(`http://localhost:5000/api/register`, user)
+    axios.post(`http://localhost:4000/api/register`, user)
     .then(res => {
       console.log(res)
       setMessage({...message, type: 'success', text: `Welcome ${res.data.username}!`})

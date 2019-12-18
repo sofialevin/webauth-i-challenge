@@ -18,7 +18,7 @@ const Login = () => {
 };
 
   const handleLogin = () => {
-    axios.post(`http://localhost:5000/api/login`, user)
+    axios.post(`http://localhost:4000/api/login`, user)
     .then(res => {
       console.log(res)
       setMessage({...message, type: 'success', text: `Welcome back ${res.data.user.username}!`})
