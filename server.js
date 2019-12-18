@@ -25,7 +25,7 @@ server.use(cors());
 server.use(helmet());
 server.use(sessions(sessionConfiguration));
 
-server.use('/api/auth', AuthRouter);
+server.use('/api', AuthRouter);
 server.use('/api/users', UserRouter);
 
 module.exports = server;
